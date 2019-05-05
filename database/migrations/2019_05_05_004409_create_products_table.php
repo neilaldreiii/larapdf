@@ -18,7 +18,6 @@ class CreateProductsTable extends Migration
             $table->text('product_name');
             $table->text('product_description');
             $table->unsignedBigInteger('product_cost');
-            $table->text('product_image');
             $table->timestamps();
         });
     }

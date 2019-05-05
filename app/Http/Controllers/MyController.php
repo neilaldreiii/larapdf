@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Exports\UsersExport;
-use App\Imports\UsersImport;
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
 use Maatwebsite\Excel\Facades\Excel;
   
 class MyController extends Controller
@@ -22,7 +22,7 @@ class MyController extends Controller
     */
     public function export() 
     {
-        return Excel::download(new UsersExport, 'users.xlsx');
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
    
     /**
@@ -30,7 +30,7 @@ class MyController extends Controller
     */
     public function import() 
     {
-        Excel::import(new UsersImport,request()->file('file'));
+        Excel::import(new ProductsImport,request()->file('file'));
            
         return back();
     }
