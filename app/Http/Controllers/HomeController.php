@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Image;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,8 +27,9 @@ class HomeController extends Controller
     public function index()
     {
         $images = Image::all();
+        $products = Product::all();
 
-        return view('home', compact('images'));
+        return view('home', compact('images', 'products'));
     }
     public function image(Request $request)
     {

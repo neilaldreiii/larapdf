@@ -1790,32 +1790,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['storage'],
-  data: function data() {
-    return {
-      infos: [{
-        id: 1,
-        title: "Hello World",
-        description: "World is cruel",
-        image: "electric"
-      }, {
-        id: 2,
-        title: "Hello Samurai",
-        description: "Samurai Champloo",
-        image: "fighting"
-      }, {
-        id: 3,
-        title: "Hello Bananas",
-        description: "Bananas are always Here",
-        image: "normal"
-      }],
-      logo: this.storage + 'water.png',
-      brand: this.storage + 'electric.png'
-    };
-  },
+  props: ['images', 'products'],
   methods: {
     createPDF: function createPDF() {
       console.log("Generating");
@@ -1845,6 +1827,66 @@ __webpack_require__.r(__webpack_exports__);
       //     doc.text(520, 450, 'Total is 5000');
       // }
       // doc.save("sample.pdf");
+    },
+    pdfPreview: function pdfPreview() {
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_0__({
+        orientation: 'l',
+        unit: 'px',
+        format: 'letter'
+      });
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.images[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var image = _step.value;
+          doc.addImage(image.image_base, 'PNG', 10, 15, 100, 100);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.products[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var product = _step2.value;
+          doc.addPage('letter', 'landscape');
+          doc.text(110, 110, product.product_name);
+          doc.text(110, 120, product.product_description);
+          doc.line(30, 140, 570, 140, 's');
+          doc.text(520, 450, product.product_cost.toString());
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      doc.output("dataurlnewwindow", 'sample.pdf');
     }
   }
 });
@@ -38252,32 +38294,20 @@ var render = function() {
         "div",
         { ref: "content" },
         [
-          _c("div", { staticClass: "d-flex justify-content-between" }, [
-            _c("p", [
-              _vm._v("Logo: "),
-              _c("img", {
-                staticStyle: { width: "200px", height: "200px" },
-                attrs: { src: _vm.logo, alt: "", id: "logo" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Brand: "),
-              _c("img", {
-                staticStyle: { width: "200px", height: "200px" },
-                attrs: { src: _vm.brand, alt: "", id: "brand" }
-              })
-            ])
-          ]),
+          _c("div", { staticClass: "d-flex justify-content-between" }),
           _vm._v(" "),
-          _vm._l(_vm.infos, function(info) {
-            return _c("div", { key: info.index, staticClass: "card mb-3" }, [
+          _vm._l(_vm.products, function(product) {
+            return _c("div", { key: product.id, staticClass: "card mb-3" }, [
               _c("div", { staticClass: "card-header" }, [
-                _c("h1", [_vm._v(_vm._s(info.title))])
+                _c("h1", [_vm._v(_vm._s(product.product_name))])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
-                _c("h2", [_vm._v(_vm._s(info.description))])
+                _c("h2", [_vm._v(_vm._s(product.product_description))])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c("small", [_vm._v(_vm._s(product.product_cost))])
               ])
             ])
           })
@@ -38292,6 +38322,12 @@ var render = function() {
       "button",
       { staticClass: "btn btn-success", on: { click: _vm.createPDF } },
       [_vm._v("Generate")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "btn btn-secondary", on: { click: _vm.pdfPreview } },
+      [_vm._v("Preview")]
     )
   ])
 }

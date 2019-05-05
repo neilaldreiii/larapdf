@@ -9,6 +9,4 @@ use Illuminate\Support\Facades\Storage;
 class Image extends Model
 {
     protected $guarded = [];
-
-    protected $appends = ['imagebase'];
 }

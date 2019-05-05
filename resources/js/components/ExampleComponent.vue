@@ -3,21 +3,25 @@
         <div class="border">
             <div ref="content">
                 <div class="d-flex justify-content-between">
-                    <p>Logo: <img :src="logo" alt="" id="logo" style="width: 200px; height: 200px"></p>
-                    <p>Brand: <img :src="brand" alt="" id="brand" style="width: 200px; height: 200px"></p>
+                    
                 </div>
-                <div v-for="info in infos" :key="info.index" class="card mb-3">
+                <div v-for="product in products" :key="product.id" class="card mb-3">
                     <div class="card-header">
-                        <h1>{{ info.title }}</h1>
+                        <h1>{{ product.product_name }}</h1>
                     </div>
                     <div class="card-body">
-                        <h2>{{ info.description }}</h2>
+                        <h2>{{ product.product_description }}</h2>
+                    </div>
+                    <div class="card-footer">
+                        <small>{{ product.product_cost }}</small>
                     </div>
                 </div>
             </div>
         </div>
         <br>
         <button @click="createPDF" class="btn btn-success">Generate</button>
+
+        <button @click="pdfPreview" class="btn btn-secondary">Preview</button>
     </div>
 </template>
 
@@ -26,33 +30,7 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 export default {
-    props: ['storage'],
-    data(){
-        return {
-            infos: [
-                {
-                    id: 1,
-                    title: "Hello World",
-                    description: "World is cruel",
-                    image: "electric"
-                },
-                {
-                    id: 2,
-                    title: "Hello Samurai",
-                    description: "Samurai Champloo",
-                    image: "fighting"
-                },
-                {
-                    id: 3,
-                    title: "Hello Bananas",
-                    description: "Bananas are always Here",
-                    image: "normal"
-                }
-            ],
-            logo: this.storage + 'water.png',
-            brand: this.storage + 'electric.png'
-        }
-    },
+    props: ['images', 'products'],
     methods: {
         createPDF () {
             console.log("Generating");
@@ -91,6 +69,31 @@ export default {
             // }
 
             // doc.save("sample.pdf");
+            
+        },
+        pdfPreview()
+        {
+            const doc = new jsPDF({
+                orientation: 'l',
+                unit: 'px',
+                format: 'letter'
+            });
+
+            for(let image of this.images)
+            {
+                doc.addImage(image.image_base, 'PNG', 10, 15, 100, 100);
+            }
+
+            for(let product of this.products)
+            {
+                doc.addPage('letter', 'landscape');
+                doc.text(110, 110, product.product_name);
+                doc.text(110, 120, product.product_description);
+                doc.line(30, 140, 570, 140, 's');
+                doc.text(520, 450, product.product_cost.toString());
+            }
+
+            doc.output("dataurlnewwindow", 'sample.pdf');
         }
     }
 }
