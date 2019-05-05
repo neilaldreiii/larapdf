@@ -8,7 +8,6 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import jsPDF from 'jspdf';
 
 /**
  * The following block of code may be used to automatically register your

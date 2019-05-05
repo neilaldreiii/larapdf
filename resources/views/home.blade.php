@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
-    <example-component></example-component> 
+    <a href="/importExportView">Files</a>
+    <example-component storage="storage/uploads/"></example-component>
 </div>
 @endsection

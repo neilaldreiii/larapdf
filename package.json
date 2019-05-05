@@ -24,6 +24,12 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "base64-img": "^1.0.4",
+        "fs": "0.0.1-security",
+        "html2canvas": "^1.0.0-rc.1",
+        "image-file-to-base64-exif": "^1.0.3",
+        "image-to-base64": "^2.0.1",
+        "image-to-uri": "^1.0.0",
         "jspdf": "^1.5.3"
     }
 }
